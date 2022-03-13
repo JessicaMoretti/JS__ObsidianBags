@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/FAVICON.png" type="image/jpg">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Obsidian Bags</title>
+</head>
+<body>
+    <header>
+        <img src="./images/OBSIDIANLOGO.png" alt="#">
+        <nav>
+            <a href="#">INICIO</a>
+            <a href="#">PRODUCTOS</a>
+            <a href="#">ACCESORIOS</a>
+        </nav>
+    </header>
+    <main class="container">
+        <div id= "imagenes">
+            <div class="card">
+                <img src="./images/c1.png" alt="#">
+                <p>
+                    Modelo Date
+                </p>
+                <p>
+                    $1500
+                </p>
+                <button id="prod_1" class="producto-btn">comprar</button>
+            </div>
+
+            <div class="card">
+                <img src="./images/c2.png" alt="#">
+                <p>
+                    Modelo Casual
+                </p>
+                <p>
+                    $2500
+                </p>
+                <button id="prod_2" class="producto-btn">comprar</button>
+            </div>
+
+            <div class="card">
+                <img src="./images/c3.png" alt="#">
+                <p>
+                    Modelo Travel
+                </p>
+                <p>
+                    $3500
+                </p>
+                <button id="prod_3" class="producto-btn">comprar</button>
+            </div>
+        </div>
+        <div id="lista">
+            <ul id="lista-productos"></ul>
+            <hr>
+            <p id="total"></p>
+        </div>
+    </main>   
+    <script src="index.js"></script> 
+</body>
+<footer id= "main__footer">
+    <p id= "contacto__redes">SEGUINOS EN REDES SOCIALES</p>
+    <p id= "contacto__w">Hace tu pedido por Whatsapp</p>
+    <div id="redes">
+        <a href="#">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=541133044420">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+</footer>
+</html>
