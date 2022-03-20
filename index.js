@@ -12,7 +12,7 @@ class cartera {
     }
   }
   
-  let carteras = []
+  const carteras = []
   carteras.push(new cartera("Date", 1500));
   carteras.push(new cartera("Casual", 2500));
   carteras.push(new cartera("Travel", 3500));
