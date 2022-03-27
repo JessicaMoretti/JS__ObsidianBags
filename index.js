@@ -1,80 +1,181 @@
-class cartera {
-    constructor(nombre, precio) {
-      this.nombre = nombre;
-      this.precio = parseInt(precio);
-    }
-    comprar() {
-      if (this.stock != 0) {
-          this.stock -= 1
-          carritoCompras.push(this.nombre)
-          valorCompra.push(this.precio)
-      }
-    }
-  }
-  
-  const carteras = []
-  carteras.push(new cartera("Date", 1500));
-  carteras.push(new cartera("Casual", 2500));
-  carteras.push(new cartera("Travel", 3500));
-  
-  let carritoCompras = []
-  let valorCompra = []
-  
-  const carritoenLS = JSON.parse(localStorage.getItem("carritoCompras"))
-  const valorCompraenLS = JSON.parse(localStorage.getItem("valorCompra"))
-  
-  
-  if (carritoenLS !== null) {
-    valorCompra = valorCompraenLS
-    carritoCompras = carritoenLS
-        for (let index = 0; index < carritoCompras.length; index++) {
-          const carroCompras = document.getElementById("lista-productos");
-          const item = document.createElement("li");
-          item.innerHTML = `${carritoCompras[index]}, $${valorCompra[index]}`;
-          carroCompras.appendChild(item);
-          total()
+document.addEventListener('DOMContentLoaded', () => {
+
+            
+    let carrito = [];
+    
+    const DOMitems = document.querySelector('#items');
+    const DOMcarrito = document.querySelector('#carrito');
+    const DOMtotal = document.querySelector('#total');
+    const DomTotalCanvas = document.querySelector('.totalMoney')
+    const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+    const miLocalStorage = window.localStorage;
+    
+
+    const URLJSON = "datos.json"
+    $.getJSON(URLJSON, function (respuesta, estado) {
+        if(estado === "success"){
+        let misDatos = respuesta;
+
+
+     function renderizarProductos() {
+        
+        for(const info of misDatos){
+            // Estructura
+            const miNodo = document.createElement('div');
+            miNodo.classList.add('card', 'col-sm-4');
+            // Body
+            const miNodoCardBody = document.createElement('div');
+            miNodoCardBody.classList.add('card-body');
+            // Titulo
+            const miNodoTitle = document.createElement('h5');
+            miNodoTitle.classList.add('card-title');
+            miNodoTitle.textContent = info.nombre;
+            // Imagen
+            const miNodoImagen = document.createElement('img');
+            miNodoImagen.classList.add('img-fluid');
+            miNodoImagen.setAttribute('src', info.imagen);
+            //Descripcion 
+            const miNodoDescripcion = document.createElement('p');
+            miNodoDescripcion.textContent = `${info.descripcion}`
+            // Precio
+            const miNodoPrecio = document.createElement('p');
+            miNodoPrecio.classList.add('card-text');
+            miNodoPrecio.textContent = `$${info.precio}`;
+            // Boton 
+            const miNodoBoton = document.createElement('button');
+            miNodoBoton.classList.add('btn', 'btn-dark');
+            miNodoBoton.textContent = 'Agregar';
+            miNodoBoton.setAttribute('marcador', info.id);
+            miNodoBoton.addEventListener('click', anyadirProductoAlCarrito);
+    
+            miNodoCardBody.appendChild(miNodoImagen);
+            miNodoCardBody.appendChild(miNodoTitle);
+            miNodoCardBody.appendChild(miNodoDescripcion);
+            miNodoCardBody.appendChild(miNodoPrecio);
+            miNodoCardBody.appendChild(miNodoBoton);
+            miNodo.appendChild(miNodoCardBody);
+            DOMitems.appendChild(miNodo);
         }
-  }
-  
-  
-  function agregarALista(cartera) {
-    if (cartera.stock !==0){
-      const listaProductos = document.getElementById("lista-productos");
-      const item = document.createElement("li");
-      item.innerHTML = `Cartera ${cartera.nombre}, $${cartera.precio}`;
-      listaProductos.appendChild(item);
     }
-  }
-  
-  function total() {
-    let total = valorCompra.reduce((acumulado, item) => {
-        return acumulado = acumulado + item;
-    });
-    document.getElementById("total").innerHTML = `TOTAL: $${total}`;
-  }
-  
-  function mensajeCompra(){
-    Swal.fire({
-      text: "Agregaste el producto a tu carrito!",
-      icon: "success",
-    });
-  }
 
-  const botones = document.getElementsByClassName("producto-btn");
-  for (let index = 0; index < botones.length; index++) {
-    const boton = botones[index];
-  
-    boton.addEventListener("click", () => {
+    
+    
+    function anyadirProductoAlCarrito(evento) {
+        carrito.push(evento.target.getAttribute('marcador'))
+        renderizarCarrito();
+        guardarCarritoEnLocalStorage();
+    }
 
-      const cartera = carteras[index];
-      agregarALista(cartera);
-      carteras[index].comprar()
-      localStorage.setItem("carritoCompras", JSON.stringify(carritoCompras) )
-      localStorage.setItem("valorCompra", JSON.stringify(valorCompra) )
-      mensajeCompra()
-      total() 
-    });
-  }
 
-  
-  
+    
+    function renderizarCarrito() {
+        DOMcarrito.textContent = '';
+        const carritoSinDuplicados = [...new Set(carrito)];
+            carritoSinDuplicados.forEach((item) => {
+           
+        const miItem = misDatos.filter((itemBaseDatos) => {
+                return itemBaseDatos.id === parseInt(item);
+            });
+           
+        const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+               return itemId === item ? total += 1 : total;
+            }, 0);
+            // nodo del item del carrito
+            const miNodo = document.createElement('li');
+            miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+            miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`;
+            // Boton de borrar
+            const miBoton = document.createElement('button');
+            miBoton.classList.add('btn', 'btn-dark', 'mx-5');
+            miBoton.textContent = 'X';
+            miBoton.style.marginLeft = '1rem';
+            miBoton.dataset.item = item;
+            miBoton.addEventListener('click', borrarItemCarrito);
+            
+            
+            
+            miNodo.appendChild(miBoton);
+            DOMcarrito.appendChild(miNodo);
+        });
+        
+        DOMtotal.textContent = calcularTotal();
+        Canvass()
+        
+        
+    }
+    function Canvass (){
+        let canvasText = document.querySelector('#money')
+        
+        canvasText.innerHTML = `<img src="./images/OBSIDIANLOGO.png">`
+        DomTotalCanvas.innerHTML = calcularTotal() 
+    }
+
+   
+    function borrarItemCarrito(evento) {
+        const id = evento.target.dataset.item;
+        carrito = carrito.filter((carritoId) => {
+            return carritoId !== id;
+        });
+       
+        renderizarCarrito();
+        guardarCarritoEnLocalStorage();
+
+    }
+
+     
+    function calcularTotal() {
+        
+        return carrito.reduce((total, item) => {
+                const miItem = misDatos.filter((itemBaseDatos) => {
+                return itemBaseDatos.id === parseInt(item);
+            });
+            
+            return total +  miItem[0].precio;
+        }, 0).toFixed(2);
+        
+    }
+
+    
+    
+    function vaciarCarrito() {
+        carrito = [];
+        renderizarCarrito();
+        localStorage.clear();
+
+    }
+    
+    
+
+    function guardarCarritoEnLocalStorage () {
+        miLocalStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+    function cargarCarritoDeLocalStorage () {
+        if (miLocalStorage.getItem('carrito') !== null) {
+        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
+        }
+    }
+     DOMbotonVaciar.addEventListener('click', vaciarCarrito);
+     
+    cargarCarritoDeLocalStorage();
+    renderizarProductos();
+    renderizarCarrito();
+}
+});
+});
+
+let footer = document.createElement("footer");
+footer.innerHTML = `<p>
+                    <h3>OBSIDIAN BAGS</h3>
+                    <p>`; 
+footer.style.background = "black";
+footer.style.color = "white";
+footer.style.textAlign = "center";
+footer.style.padding-top ; "window ";
+footer.style.position ="offcanvas";
+
+document.body.appendChild(footer)
+
+document.body.style.background = "white  no-repeat right top";
+
+

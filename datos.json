@@ -1,0 +1,22 @@
+[{
+    "id": 1,
+    "nombre": " Rockstar ",
+    "imagen": "./images/c1.png",
+    "precio": 2000,
+    "descripcion": "Ideal para llevar con todos tus outfits"
+},
+{
+    "id": 2,
+    "nombre": "Bellatrix",
+    "imagen": "./images/c2.png",
+    "precio": 3200,
+    "descripcion": "Ideal para llevar a la oficina"
+},
+{
+    "id": 3,
+    "nombre": "Trip L",
+    "imagen": "./images/c3.png",
+    "precio": 4500,
+    "descripcion": "Ideal para llevar en tus viajes con estilo "
+}
+]
