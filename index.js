@@ -20,21 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
      function renderizarProductos() {
         
         for(const info of misDatos){
-            // Estructura
+           
             const miNodo = document.createElement('div');
             miNodo.classList.add('card', 'col-sm-4');
-            // Body
+            
             const miNodoCardBody = document.createElement('div');
             miNodoCardBody.classList.add('card-body');
-            // Titulo
+            
             const miNodoTitle = document.createElement('h5');
             miNodoTitle.classList.add('card-title');
             miNodoTitle.textContent = info.nombre;
-            // Imagen
+            
             const miNodoImagen = document.createElement('img');
             miNodoImagen.classList.add('img-fluid');
             miNodoImagen.setAttribute('src', info.imagen);
-            //Descripcion 
+            
             const miNodoDescripcion = document.createElement('p');
             miNodoDescripcion.textContent = `${info.descripcion}`
             // Precio
@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const numeroUnidadesItem = carrito.reduce((total, itemId) => {
                return itemId === item ? total += 1 : total;
             }, 0);
-            // nodo del item del carrito
+           
             const miNodo = document.createElement('li');
             miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
             miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`;
-            // Boton de borrar
+            
             const miBoton = document.createElement('button');
             miBoton.classList.add('btn', 'btn-dark', 'mx-5');
             miBoton.textContent = 'X';
@@ -165,11 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let footer = document.createElement("footer");
-footer.innerHTML = `<p>
+footer.innerHTML = `<hr>
+                    <p>
                     <h3>OBSIDIAN BAGS</h3>
                     <p>`; 
-footer.style.background = "black";
-footer.style.color = "white";
+footer.style.background = "white";
+footer.style.color = "black";
 footer.style.textAlign = "center";
 footer.style.padding-top ; "window ";
 footer.style.position ="offcanvas";

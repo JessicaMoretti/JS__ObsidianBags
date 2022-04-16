@@ -3,7 +3,7 @@
     "nombre": " Rockstar ",
     "imagen": "./images/c1.png",
     "precio": 2000,
-    "descripcion": "Ideal para llevar con todos tus outfits"
+    "descripcion": "Para todos tus outfits"
 },
 {
     "id": 2,
@@ -17,6 +17,27 @@
     "nombre": "Trip L",
     "imagen": "./images/c3.png",
     "precio": 4500,
-    "descripcion": "Ideal para llevar en tus viajes con estilo "
+    "descripcion": "Hacé tus viajes con estilo "
+},
+{
+    "id": 4,
+    "nombre": "Travel XL",
+    "imagen": "./images/c4.png",
+    "precio": 5000,
+    "descripcion": "Más espacio para tus viajes "
+},
+{
+    "id": 5,
+    "nombre": "Bag",
+    "imagen": "./images/c5.png",
+    "precio": 2000,
+    "descripcion": "llevala siempre con vos "
+},
+{
+    "id": 6,
+    "nombre": "Rin XL",
+    "imagen": "./images/c6.png",
+    "precio": 3500,
+    "descripcion": "El mejor estilo "
 }
 ]
